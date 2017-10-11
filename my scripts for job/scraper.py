@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import csv
 import time
 import json
-import time
 
 FILENAME = "......csv"
 f1 = open(FILENAME , 'a',encoding = 'utf-8')
