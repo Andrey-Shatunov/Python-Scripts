@@ -28,7 +28,7 @@ class TestSearchYandexMarket(unittest.TestCase):
 
         self.driver.find_element(By.ID, "glpricefrom").send_keys("25000")
         self.driver.find_element(By.ID, "glpriceto").send_keys("30000")
-        self.driver.find_element(By.ID, "glpriceto").send_keys(Keys.ENTER)
+        #self.driver.find_element(By.ID, "glpriceto").send_keys(Keys.ENTER)
 
         # при установке фильтра появляется div.preloadable__preloader.preloadable__preloader_visibility_visible.preloadable__paranja
         # который делает область товаров неактивной. Ждем пока он появиться и пропадет
@@ -44,7 +44,8 @@ class TestSearchYandexMarket(unittest.TestCase):
             )))
 
     def tearDown(self):
-        self.driver.close()
+        pass
+        #self.driver.close()
 
     def test_search_by_price(self):
         # сохраняем html-код страницы в переменую и парсим с помощью BeautifulSoup
@@ -52,14 +53,16 @@ class TestSearchYandexMarket(unittest.TestCase):
         soup = BeautifulSoup(html_source, 'html.parser')
 
         # получаем цены
-        soup_prices_on_page = soup.find_all('div', {'class': 'price'})
+        soup_prices_on_page = soup.find_all(lambda tag: tag.name == 'div' and tag.get('class') == ['price'])
 
-        for i in soup_prices_on_page:
+        for soup_price in soup_prices_on_page:
             price = int(
-                i.text.replace('от', '').replace('₽', '').replace(' ',
+                soup_price.text.replace('от', '').replace('₽', '').replace(' ',
                                                                   '').strip())
+            print(price)
             isT = True if price >= 25000 and price <= 30000 else False
-            self.assertTrue(isT)
+
+            self.assertTrue(isT, msg='Ошибка, цена товара равна {0}'.format(price))
 
 
 if __name__ == "__main__":
