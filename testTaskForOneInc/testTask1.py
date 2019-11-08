@@ -44,8 +44,7 @@ class TestSearchYandexMarket(unittest.TestCase):
             )))
 
     def tearDown(self):
-        pass
-        #self.driver.close()
+        self.driver.close()
 
     def test_search_by_price(self):
         # сохраняем html-код страницы в переменую и парсим с помощью BeautifulSoup
@@ -59,7 +58,6 @@ class TestSearchYandexMarket(unittest.TestCase):
             price = int(
                 soup_price.text.replace('от', '').replace('₽', '').replace(' ',
                                                                   '').strip())
-            print(price)
             isT = True if price >= 25000 and price <= 30000 else False
 
             self.assertTrue(isT, msg='Ошибка, цена товара равна {0}'.format(price))
