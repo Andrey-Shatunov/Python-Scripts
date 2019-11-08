@@ -58,8 +58,8 @@ class TestSearchYandexMarket(unittest.TestCase):
             price = int(
                 i.text.replace('от', '').replace('₽', '').replace(' ',
                                                                   '').strip())
-            isApple = True if price >= 25000 and price <= 30000 else False
-            self.assertTrue(isApple)
+            isT = True if price >= 25000 and price <= 30000 else False
+            self.assertTrue(isT)
 
 
 if __name__ == "__main__":
